@@ -5,10 +5,9 @@ import { plasmicIFrameMouseDownEvent } from "@/wab/client/definitions/events";
 import ArrowLeftIcon from "@/wab/client/plasmic/plasmic_kit/PlasmicIcon__ArrowLeft";
 import CloseIcon from "@/wab/client/plasmic/plasmic_kit/PlasmicIcon__Close";
 import { STUDIO_SHORTCUTS } from "@/wab/client/shortcuts/studio/studio-shortcuts";
-import { cx, ensure } from "@/wab/common";
+import { cx, ensure } from "@/wab/shared/common";
 import { arrayReversed } from "@/wab/commons/collections";
 import { useInteractOutsideWithCommonExceptions } from "@/wab/commons/components/OnClickAway";
-import { Slot, SlotProvider } from "@/wab/commons/components/Slots";
 import domAlign from "dom-align";
 import L from "lodash";
 import { observer } from "mobx-react";
@@ -46,7 +45,7 @@ const SidebarModalContext = React.createContext<Store | undefined>(undefined);
 function useSidebarModalContext() {
   return ensure(
     React.useContext(SidebarModalContext),
-    "Unexpected nulish SidebarModalContext"
+    "Unexpected nullish SidebarModalContext"
   );
 }
 
@@ -131,10 +130,7 @@ export function SidebarModalProvider(props: {
   const store = React.useMemo(() => ({ state, dispatch }), [state, dispatch]);
   return (
     <SidebarModalContext.Provider value={store}>
-      <SlotProvider>
-        <SidebarModalShell />
-        <Slot />
-      </SlotProvider>
+      <SidebarModalShell />
       {props.children}
     </SidebarModalContext.Provider>
   );
